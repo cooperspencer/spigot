@@ -4,7 +4,7 @@ This Dockerfile always builds the latest version of spigot
 
 ## Quick Start
 ```sh
-docker pull buddyspencer/spugit
+docker pull buddyspencer/spigot
 ```
 
 ```sh
@@ -14,7 +14,7 @@ docker run \
   -e MEMORYSIZE='1G' \
   -v /path/to/volume:/data:rw \
   -p 25565:25565 \
--i buddyspencer/spugit:latest
+-i buddyspencer/spigot:latest
 ```
 ```sh
 docker attach mc
