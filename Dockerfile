@@ -4,7 +4,18 @@ ADD getLatestSpigot.py getLatestSpigot.py
 RUN pip install requests
 RUN python getLatestSpigot.py
 
-FROM adoptopenjdk/openjdk16:latest AS runtime
+FROM openjdk:16-slim AS build
+COPY --from=builder /opt/minecraft/spigot.jar /opt/minecraft/spigotclip.jar
+
+WORKDIR /opt/minecraft
+
+# Run spigotclip and obtain patched jar
+RUN /usr/local/openjdk-16/bin/java -jar /opt/minecraft/spigotclip.jar; exit 0
+
+# Copy built jar
+RUN mv /opt/minecraft/cache/patched*.jar spigot.jar
+
+FROM openjdk:16-slim AS runtime
 
 # Working directory
 WORKDIR /data
@@ -30,4 +41,4 @@ ENV JAVAFLAGS=$java_flags
 WORKDIR /data
 
 # Entrypoint with java optimisations
-ENTRYPOINT /opt/java/openjdk/bin/java -jar -Xms$MEMORYSIZE -Xmx$MEMORYSIZE $JAVAFLAGS /opt/minecraft/spigot.jar --nojline nogui
+ENTRYPOINT /usr/local/openjdk-16/bin/java -jar -Xms$MEMORYSIZE -Xmx$MEMORYSIZE $JAVAFLAGS /opt/minecraft/spigot.jar --nojline nogui
