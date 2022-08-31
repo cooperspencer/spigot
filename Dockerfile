@@ -1,16 +1,10 @@
-FROM python:slim-buster AS builder
-WORKDIR /opt/minecraft
-ADD getLatestSpigot.py getLatestSpigot.py
-RUN pip install requests
-RUN python getLatestSpigot.py
-
-FROM openjdk:16-slim AS runtime
+FROM openjdk:17-slim AS runtime
 
 # Working directory
 WORKDIR /data
 
 # Obtain runable jar from build stage
-COPY --from=builder /opt/minecraft/spigot.jar /opt/minecraft/spigot.jar
+ADD https://download.getbukkit.org/spigot/spigot-1.19.2.jar /opt/minecraft/spigot.jar
 
 # Volumes for the external data
 VOLUME "/data"
