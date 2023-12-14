@@ -4,7 +4,7 @@ FROM openjdk:17-slim AS runtime
 WORKDIR /data
 
 # Obtain runable jar from build stage
-ADD https://getbukkit.org/get/46e75fbce00414b03b1b3eae88fcf73d /opt/minecraft/spigot.jar
+ADD spigot.jar /opt/minecraft/spigot.jar
 
 # Volumes for the external data
 VOLUME "/data"
