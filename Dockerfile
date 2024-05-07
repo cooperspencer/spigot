@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jre-alpine AS runtime
+FROM openjdk:17-slim AS runtime
 
 # Working directory
 WORKDIR /data
@@ -24,4 +24,4 @@ ENV JAVAFLAGS=$java_flags
 WORKDIR /data
 
 # Entrypoint with java optimisations
-ENTRYPOINT java -jar -Xms$MEMORYSIZE -Xmx$MEMORYSIZE $JAVAFLAGS /opt/minecraft/spigot.jar --nojline nogui
+ENTRYPOINT /usr/local/openjdk-17/bin/java -jar -Xms$MEMORYSIZE -Xmx$MEMORYSIZE $JAVAFLAGS /opt/minecraft/spigot.jar --nojline nogui
